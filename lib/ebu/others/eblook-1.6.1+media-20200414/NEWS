@@ -1,0 +1,128 @@
+* Changes in eblook 1.6.1
+
+** EB ライブラリ 4.1 に対応。
+
+* Changes in eblook 1.6
+
+** EB ライブラリ 4.0 に移行。
+
+** pbm xbm bmp bmp2ppm bmp2tiff jpg jpeg コマンドの追加。
+
+
+* Changes in eblook 1.5.1
+
+** EB ライブラリ 3.2.1 に対応。
+
+** いくつかのバグフィクス。
+
+
+* Changes in eblook 1.5
+
+** EB ライブラリ 3.0 に移行。EB ライブラリ 2.x とは非互換。
+
+** ロケールに対応した入出力のサポート。
+
+** 上記に伴ない、configure オプションを変更。
+--with-eb-conf で eb.conf の場所を指定する。デフォルトでは 
+/usr/local/etc/eb.conf と想定する。--with-eb-includes と 
+-with-eb-libraries は廃止。また、--with-fallback-encoding で
+自動認識失敗時の encoding を指定する。
+
+** eblook の現在のホームページは次のところ。
+http://openlab.ring.gr.jp/edict/eblook/
+
+
+* Changes in eblook 1.4
+
+** Windows で日本語以外の辞書を使ったときに文字化けするバグを修正。
+
+
+* Changes in eblook 1.3
+
+** eblook の現在のホームページは次のところ。
+http://openlab.ring.gr.jp/lookup/eblook/
+
+** Windows 環境でのコンパイル方法が変わった。
+README を参照のこと。
+
+** いくつかのバグフィクス。
+
+
+* Changes in eblook 1.2
+
+** configure にオプション --with-zlib-{includes,libraries} を追加。
+
+** Windows の mingw32 環境でのコンパイルをサポート。
+configure にオプション --with-mingw32 を指定する。
+また、デフォルトの文字コードを SJIS にした。
+
+** `set' 出来るオプション `kanji-code' を追加。
+入出力の文字コードを決定する。`JIS', `SJIS', `EUC' のいずれかを設定可能。
+
+** バージョンの出力に EB ライブラリのバージョン情報を追加。
+
+** 若干のバグフィクス。
+
+
+* Changes in eblook 1.1
+
+** eblook のホームページが移動した。
+新しいアドレスは http://ring.aist.go.jp/openlab/lookup/eblook/。
+
+** EB ライブラリを配布物から取り除いた。
+今後は EB ライブラリの Web ページから直接取ってきて欲しい。
+http://www.sra.co.jp/people/m-kasahr/eb/
+
+** 上記に伴ない、configure にオプションを追加。
+--with-eb-includes と -with-eb-libraries により、EB ライブラリのある
+ディレクトリを指定する。デフォルトでは /usr/local 以下にあると想定する。
+
+** 新しいコマンド `book'。
+今後、辞書ディレクトリはこのコマンドにより指定する。これにより、
+"set dict ..." などによる辞書指定は無効となった。
+
+** いくつかのコマンドの仕様を見直した。
+詳しくはマニュアルを参照のこと。
+
+
+* Changes in eblook 1.0
+
+** 新しいコマンド `copyright'。
+辞書の著作権情報を出力する。
+
+** EB Library を 2.1 にアップデートした。
+
+
+* Changes in eblook 1.0b0
+
+** EB Library を 2.1beta1 にアップデートした。
+
+これにより、辞書を圧縮して利用出来るようになった。詳しくは、eb サブ
+ディレクトリに附属のドキュメント(特に ebzip-ja.info)を参照。
+
+* Changes in eblook 0.9
+
+** 初期化ファイル "~/.eblookrc" をロードするようにした。
+ファイルに記述されたコマンドが起動直後に実行される。起動時にオプション
+`-q' または `--no-init-file' を指定することで、これを無効に出来る。
+
+** 外字のタグの形式を <gaiji=xxxx> とした。リファレンスのタグの形式を
+<reference>...</reference=xxxx> とした。
+
+** コマンド `dicinfo' で、外字の範囲を出力しなくなった。
+代わりに、コマンド `font' を引数なしで実行することで、全ての外字が出力
+される。
+
+** EB Library をバージョン 2.0 にアップデートした。
+
+* Changes in eblook 0.8.2
+
+** EB Library をバージョン 1.0.6 にアップデートした。
+eb-1.0.6 は 1.0.5 を bug-fix しただけで、機能的な変更はない。
+
+* eblook 0.8.1 is a bug-fix release with no user-visible changes.
+
+Local variables:
+mode: outline
+paragraph-separate: "[ 	]*$"
+end:

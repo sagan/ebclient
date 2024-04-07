@@ -1,0 +1,755 @@
+これは eblook.info、eblook.texi より makeinfo バージョン 4.5
+によって作成されました。
+
+INFO-DIR-SECTION CD-ROM Book Utilities
+START-INFO-DIR-ENTRY
+* eblook: (eblook).             Interactive EB interface command.
+END-INFO-DIR-ENTRY
+
+   This file documents eblook, an interactive EB interface command.
+
+   Copyright (C) 1997,1998,1999,2000 Keisuke Nishida Copyright (C)
+2000-2002 Satomi Copyright (C) 2000,2001 Kazuhiko Copyright (C)
+2000-2002 NEMOTO Takashi
+
+   Permission is granted to make and distribute verbatim copies of this
+manual provided the copyright notice and this permission notice are
+preserved on all copies.
+
+   Permission is granted to copy and distribute modified versions of
+this manual under the conditions for verbatim copying, provided that the
+entire resulting derived work is distributed under the terms of a
+permission notice identical to this one.
+
+   Permission is granted to copy and distribute translations of this
+manual into another language, under the above conditions for modified
+versions, except that this permission notice may be stated in a
+translation approved by the Free Software Foundation.
+
+
+File: eblook.info,  Node: Top,  Next: Introduction,  Prev: (dir),  Up: (dir)
+
+eblook
+******
+
+   eblook は、EB
+ライブラリを用いた対話型の電子辞書検索コマンドです。簡単な
+設定とコマンドにより CD-ROM 書籍が利用出来ます。
+
+   本書は eblook 1.6 について説明しています。
+
+* Menu:
+
+* Introduction::                はじめに
+* Overview::                    大まかな使い方
+* Starting::                    eblook の起動
+* Setting::                     辞書の選択と設定
+* Search::                      検索法
+* Information::                 各種情報
+* Commands::                    コマンド一覧
+* Variables::                   変数一覧
+* Compile::                     コンパイルとインストール
+* How To Get::                  最新情報の入手
+
+
+File: eblook.info,  Node: Introduction,  Next: Overview,  Prev: Top,  Up: Top
+
+はじめに
+********
+
+   eblook は、EB ライブラリ(*note EB: (eb)Top)を用いた対話型の電子辞書
+検索コマンドです。簡単な設定とコマンドにより CD-ROM 書籍が利用出来ます。
+
+   eblook
+は手軽さを重視したツールであり、ユーザ・アクセスの管理など、ネッ
+トワーク利用を想定した複雑な機能は提供していません。そのような目的には
+NDTPD というソフトウェアが公開されていますので、そちらが利用になれます。
+(<http://www.sra.co.jp/people/m-kasahr/ndtpd/> を参照)
+
+   eblook はフリー・ソフトウェアです。あなたは、Free Software
+Foundation が 公表した GNU General Public License (GNU
+一般公有使用許諾)のバージョン 2
+あるいはそれ以降の各バージョンの中からいずれかを選択し、そのバージョンが
+定める条項に従って eblook を再配布または変更することができます。
+
+   eblook
+は有用とは思いますが、頒布にあたっては、市場性及び特定目的適合性
+についての暗黙の保証を含めて、いかなる保証も行ないません。詳細については
+GNU General Public License をお読みください。
+
+   加えてあなたは、eblook と共に利用する CD-ROM
+書籍の使用許諾も守らなけれ ばなりません。書籍の利用が許されない場合にも
+eblook を用いることは可能か もしれませんが、そのような場合に eblook
+を用いてはなりません。
+
+
+File: eblook.info,  Node: Overview,  Next: Starting,  Prev: Introduction,  Up: Top
+
+大まかな使い方
+**************
+
+   辞書のあるディレクトリを引数に、eblook をシェルから起動します。
+
+     % eblook /cdrom
+     eblook> -!-
+
+   `help' でコマンド一覧を表示します。
+
+     eblook> help
+      book [directory [appendix]] - Set a book directory
+      info                   - Show information of the selected book
+      list                   - List all dictionaries in the selected book
+      select subbook         - Select a subbook
+      subinfo                - Show information of the selected subbook
+      copyright              - Show copyright of the selected subbook
+      menu                   - Show the menu of the selected subbook
+      search pattern [offset] - Search for a word
+      content entry [offset] - Display contents of entry
+      dump entry [offset]    - Display dumps of entry
+      font [id]              - Display the bitmap of gaiji
+      show [variable]        - Show the value of variables
+      set variable value     - Set a variable to the value
+      unset variable...      - Unset variables
+      candidate              - Show candidates for multi search
+      label [id]             - Show label for multi search
+      help                   - Show this message
+      quit                   - Quit program
+
+   `list' で辞書一覧を表示します。
+
+     eblook> list
+      1. KOKUGO      国語辞典
+      2. EIWA        英和辞典
+
+   `select' で辞書選択し、`search' で検索します。
+
+     eblook> select 2
+     eblook> search test
+      1. 1234:567    test
+
+   `content' で内容表示します。
+
+     eblook> content 1
+     test /t'est/
+     [名] 1. 試験...
+
+   `quit' で終了します。
+
+     eblook> quit
+     % -!-
+
+
+File: eblook.info,  Node: Starting,  Next: Setting,  Prev: Overview,  Up: Top
+
+eblook の起動
+*************
+
+   eblook の起動方法は次の通りです。
+
+     eblook [option...] [BOOK-DIRECTORY [APPENDIX-DIRECTORY]]
+
+   BOOK-DIRECTORY は書籍のあるディレクトリを指定します。省略された場
+合は、カレントディレクトリが書籍ディレクトリとみなされます。
+
+   APPENDIX-DIRECTORY には Appendix のあるディレクトリを指定します。
+省略された場合は、Appendix は利用されません。(*note Appendix::)
+
+   これら引数の値は、どちらも起動後に変更することも出来ます。 *note
+Setting:: を参照して下さい。
+
+   オプションには次のものが有効です。
+
+`-e'
+`--encoding=NAME'
+     文字コードを指定します (euc, sjis, jis,
+     utf8)。デフォルトは自動判別。 使用できる文字コードはシステムの
+     iconv ライブラリに依存します。 iconv の無いシステムでは euc, sjis
+     が使用可能です。
+
+`-q'
+`--no-init-file'
+     初期化ファイル(`~/.eblookrc')を読み込みません。
+
+`-v'
+`--version'
+     コマンドのバージョン番号を表示して終了します。
+
+`-h'
+`--help'
+     コマンドのヘルプを表示して終了します。
+
+
+File: eblook.info,  Node: Setting,  Next: Search,  Prev: Starting,  Up: Top
+
+辞書の選択と設定
+****************
+
+   eblook を起動すると、最初にホームディレクトリにある初期化ファイル
+(`~/.eblookrc', DOS版 の場合は `%HOME%/eblookrc') を読み込みます。
+このファイルには以下に記載された任意のコマンドを記述することができ、先頭から順に解釈されます。ただし、このコマンド実行は書籍ファイルを開く前に実行されるため、検索コマンド等はエラーとなります。
+
+   コマンド `book' により書籍のあるディレクトリを指定します。
+
+     eblook> book `/cdrom' `/usr/local/share/eb/appendix'
+
+   書籍ディレクトリに含まれる辞書の一覧は、コマンド `list' により見る
+ことが出来ます。
+
+     eblook> list
+      1. KOKUGO	国語辞典
+      2. EIWA	英和辞典
+
+   辞書はコマンド `select' によりセットすることで、利用可能となります。
+
+     eblook> select 1
+
+   あるいは
+
+     eblook> select KOKUGO
+
+   コマンド `set' により、オプションの設定が可能です。例えばプロンプト
+を変更するには、次のようにします。
+
+     eblook> set prompt "eblook$ "
+     eblook$ -!-
+
+上のように、引数に空白を含める必要がある場合には、値をダブルクオートで引
+用出来ます。
+
+   変数の値はコマンド `show' で見ることが出来ます。
+値を無効にするにはコマンド `unset' があります。
+
+     eblook$ show prompt
+     eblook$
+     eblook$ unset prompt
+     eblook> show
+     version eblook 1.0
+     max-text        8192
+     max-hits        256
+     eblook> -!-
+
+   設定・参照できる変数の一覧は *Note Variables:: を参照して下さい。
+
+
+File: eblook.info,  Node: Search,  Next: Information,  Prev: Setting,  Up: Top
+
+検索方法
+********
+
+   このバージョンの eblook
+では、検索方式として単語検索(前方一致検索、後方
+一致検索、完全一致検索)と、メニューの参照を行なうことが出来ます。また、
+外字を扱うことも出来ます。
+
+* Menu:
+
+* Word Search::                 単語検索
+* Keyword Search::              条件検索
+* Multiple Search::             複合検索
+* Menu::                        メニュー
+* Content::                     内容表示
+* Appendix::                    外字の置換
+
+
+File: eblook.info,  Node: Word Search,  Next: Keyword Search,  Prev: Search,  Up: Search
+
+単語検索
+========
+
+   コマンド `search' で検索を行ないます。あらかじめ辞書を選択しておく
+必要があります。
+
+     eblook> select EIWA
+     eblook> search test
+      1. 1234:567    test
+
+   変数 `search-method' により検索方式を変更出来ます。現在、次のものを
+指定可能です。(デフォルトは `glob')
+
+`word'
+     前方一致検索を行なう。
+
+`endword'
+     後方一致検索を行なう。
+
+`exact'
+     完全一致検索を行なう。
+
+`glob'
+     文字列を見て、検索法を決定します。検索語が `foo*' ならば `foo'
+     をキーに前方一致検索を行ない、同様に `*foo' ならば後方一致検索を行
+     い、`foo' ならば完全一致検索を行ないます。
+
+     eblook> show search-method
+     glob
+     eblook> search test*
+      1. 1234:567    test
+      2. 2345:678    testament
+     eblook> search *test
+      1. 1234:567    test
+      2. 3456:789    latest
+     eblook> set search-method word
+     eblook> search test
+      1. 1234:567    test
+      2. 2345:678    testament
+
+出力の一桁目はエントリの番号で、二桁目はエントリを決定するためのコード番
+号です。いずれかをコマンド `content' に渡すことで、エントリの内容が
+出力されます。(*note Content::)
+
+   変数 `max-hits' により、出力する見出し語の数を制限出来ます。
+
+     eblook> show max-hits
+     256
+     eblook> search t*
+      1. 1263:25     t
+      2. 1273:832    t.
+      :
+     255. 1312:684   tabu
+     <more point=256>
+
+   続きを表示するには、`search' に第二引数を渡して下さい。
+
+     eblook> search t* 256
+     256. 1336:32    tantalization
+     257. 1358:2ab   tantalize
+      :
+     511. 14c6:233   tea shop
+     <more point=512>
+
+   引数や `max-hits' に 0 を指定すると、全てのエントリが出力されます。
+
+
+File: eblook.info,  Node: Keyword Search,  Next: Multiple Search,  Prev: Word Search,  Up: Search
+
+条件検索
+========
+
+   コマンド `search' で検索を行なう際に `=foo' のように `='
+に続いてキーワードを指定すれば条件検索を行います。`=foo=bar' のよう
+に、複数のキーワードを指定することができます。
+
+     eblook> search =日本=茶
+      1. 54a:56a     うぐいす【鶯】ウグヒス
+      2. 658:2ce     うれしの‐ちゃ【嬉野茶】
+      3. 129e:256    グリーン‐ティー【green tea】
+      4. 1577:166    こう‐ちゃ【紅茶】
+      5. 28a9:bc     ちゃのほん【茶の本】
+      6. 3323:29e    はぶ‐そう【波布草】‥サウ
+
+   (以上、例は広辞苑第四版より)
+
+
+File: eblook.info,  Node: Multiple Search,  Next: Menu,  Prev: Keyword Search,  Up: Search
+
+複合検索
+========
+
+   コマンド `label' により、その辞書での複合検索のラベルを全て表示しま
+す。番号は複合検索 ID です。`label 1' とすると、その番号の ID のラ
+ベルのみ出力します。
+
+     eblook> label
+      1. 地域（→参照）:時代（→参照）:キーワード:キーワード:
+      2. 国名・地域名（→参照）:地方名（→参照）:キーワード:キーワード:
+      3. 国名など（→参照）:ジャンル（→参照）:キーワード:キーワード:
+      4. 季節（→参照）:ジャンル（→参照）:キーワード:キーワード:
+
+   コマンド `candidate' により、複合検索のキーワードの候補を表示します。
+
+     eblook> candidate
+       multi search 1:
+         label 1: 地域（→参照）
+           candidates: exist
+     *日本
+     *中国・朝鮮
+     *ヨーロッパ・北アメリカ
+     *インド・アフリカなど
+         label 2: 時代（→参照）
+           candidates: exist
+     *近代以前
+     *近現代
+         label 3: キーワード
+           candidates: not-exist
+         label 4: キーワード
+           candidates: not-exist
+       multi search 2:
+         label 1: 国名・地域名（→参照）
+           candidates: exist
+     (後略)
+
+   実際に複合検索を実行するには、コマンド `search' で検索を行なう際に
+`:中国・朝鮮:近現代:ひと:*:' のように `:' で区切ってキーワード
+を指定します。
+
+     eblook> search :中国・朝鮮:近現代:ひと:*:
+      1. 2fa:36      いく‐たつふ【郁達夫】
+      2. 759:636     えん‐せいがい【袁世凱】<gaiji=ha169>ン‥
+      3. 7a7:25e     おう‐こくい【王国維】ワウ‥<gaiji=ha168>
+      4. 7ba:6ec     おう‐ちょうめい【汪兆銘】ワウテウ‥
+     (後略)
+
+   コマンド `set multi-search-id 2' などとすると、複合検索 ID を切り替
+えられます。
+
+     eblook> set multi-search-id 2
+     eblook> label 2
+      2. 国名・地域名（→参照）:地方名（→参照）:キーワード:キーワード:
+     eblook> search :日本:北海道:*:*:
+      1. 7b:3ac      あかびら【赤平】
+      2. 8b:218      あかん【阿寒】
+      3. 8b:31a      あかん‐こ【阿寒湖】
+      4. 8b:434      あかん‐こくりつこうえん【阿寒国立公園】‥<gaiji=ha169>ン
+     (後略)
+
+   (以上、例は広辞苑第四版より)
+
+
+File: eblook.info,  Node: Menu,  Next: Content,  Prev: Multiple Search,  Up: Search
+
+メニュー
+========
+
+   辞書がメニューを持つ場合、コマンド `menu' により出力されます。
+
+     eblook> menu
+     <reference>『国語辞典』について</reference=2a18:2>
+     <reference>凡例</reference=2a18:202>
+
+   角括弧に挟まれたタグのうち、`/reference=' となっている部分の後ろが
+メニューの内容となっており、コマンド `content' によりその先を得るこ
+とが出来ます。(*note Content::)
+
+     eblook> content 2a18:2
+     『国語辞典 第一版』
+     
+     19xx年xx月xx日 第一版第一刷
+
+
+File: eblook.info,  Node: Content,  Next: Appendix,  Prev: Menu,  Up: Search
+
+内容表示
+========
+
+   コマンド `content' により、エントリの内容が得られます。
+
+     eblook> search test
+      1. 1234:567    test
+      2. 2345:678    testament
+     eblook> content 1
+     test /t'est/
+     [名] 1. 試験...
+     eblook> content 1234:567
+     test /t'est/
+     [名] 1. 試験...
+
+内容がリファレンスを持つ場合、その部分が先のメニューと同じタグによって表
+わされます。
+
+   `search' と同様に、出力するバイト数を変数 `max-text' によって
+調節出来ます。続きを得る場合には `content' に第二引数を与えるのも同
+じです。0 を与えると最後まで出力されます。
+
+   出力内容の外字部分を通常のテキスト文字で置き換えることも可能です。
+*Note Appendix:: を参照して下さい。
+
+
+File: eblook.info,  Node: Appendix,  Prev: Content,  Up: Search
+
+Appendix ファイルの利用
+=======================
+
+   eblook が内部で利用している EB ライブラリには、Appendix と呼ばれる
+各辞書に固有の項目区切り記号や外字代替法を指定する機能があります。
+eblook を単体使用する場合など、外字 bitmap が表示できない場合や
+項目区切りがうまく自動設定されない場合、前後項目への移動機能が正常に
+動作しない場合にご利用下さい。
+
+   主要な辞書については既に他の人が Appendix ファイルを作製してくれて
+いる場合があります。その場合には Appendix パッケージを入手し、適当な
+ディレクトリに展開して下さい。
+
+NDTPD
+     <http://www.sra.co.jp/people/m-kasahr/ndtpd/>
+
+   eblook コマンドの第二引数か、もしくはコマンド `book' の第二引数とし
+てディレクトリを指定することにより機能します。 (*note Starting::)
+
+   自分で Appendix を作製する場合には、現在のところ明文化された
+説明文がありませんので、既存の適当な appendix ファイル中の `*.app'
+を参考に作製して下さい。
+
+項目区切りの指定
+----------------
+
+   項目間の区切り記号が正常に認識できない場合に指定します。
+うまくいかない場合、たいていは appendix ファイル中で
+
+   `stop-code 0x1f09 0x0001'
+
+   を指定すれば良いと思いますのでお試し下さい。
+
+外字の置換
+----------
+
+   EB ライブラリの機能として、CD-ROM
+書籍に含まれる特殊な外字を通常の文字列
+で置き換えることが可能です。何もしないと、外字は次のように表わされます。
+
+     eblook> content 1234:567
+     test /t<gaiji=ha123>st/
+     <gaiji=ha234><gaiji=ha345> 1. 試験...
+
+   外字の置き換えを行なうと、以下のように表示することができます。
+(lookup と組み合わせて使用するときは、外字を bitmap 表示すること
+が可能な場合がありますので、好みの方法を選択して下さい。)
+
+     eblook> book /cdrom /usr/local/share/eb/appendix
+     eblook> content 1234:567
+     test /t'est/
+     [名] 1. 試験...
+     eblook> -!-
+
+   あるいはコマンド `font' により、外字のデータを xbm 形式のビットマッ
+プデータとして得ることも出来ます。
+
+     eblook> font ha123
+     #define default_width    8
+     #define default_height   16
+     static unsigned char default_bits[] = {
+        0x00, 0x30, 0x18, 0x00, 0x00, 0x00, 0x18, 0x24, 0x42, 0x7e, 0x02, 0x02,
+        0x44, 0x38, 0x00, 0x00};
+
+
+File: eblook.info,  Node: Information,  Next: Commands,  Prev: Search,  Up: Top
+
+各種情報
+********
+
+   コマンド `info' により、書籍の情報が出力されます。
+
+     eblook> info
+      disc type: EPWING
+      character code: JIS X 0208
+      the number of dictionaries: 4
+
+   コマンド `subinfo' により、選択している辞書の情報が出力されます。
+
+     eblook> select EIWA
+     eblook> subinfo
+      title: 英和辞典
+      directory: EIWA
+      search methods: word endword exact menu
+      font sizes: 16 24 30 48
+      widw font characters: 0xa123 -- 0xa456
+
+   コマンド `copyright' により、選択している辞書の著作権情報が出力され
+ます。
+
+     eblook> copyright
+     「英和辞典」 Copyright (C) 1998 Keisuke Nishida
+
+   コマンド `help' により、コマンドの一覧が出力されます。
+
+
+File: eblook.info,  Node: Commands,  Next: Variables,  Prev: Information,  Up: Top
+
+コマンド一覧
+************
+
+`book [DIRECTORY [APPENDIX]]'
+     辞書を選択します。第一引数には書籍のあるディレクトリ、第二引数には
+     Appendix
+     のあるディレクトリを指定します。全て省略した場合には、現在の設
+     定が表示されます。
+
+`info'
+     選択されている書籍に関する情報を出力します。
+
+`list'
+     選択されている書籍の辞書一覧を出力します。
+
+`select DICTIONARY'
+     辞書を選択します。設定すべき値は、`list'
+     コマンドの出力から得られます。
+
+`subinfo'
+     選択されている辞書に関する情報を出力します。
+
+`copyright'
+     選択されている辞書の著作権情報を出力します。
+
+`menu'
+     選択されている辞書がメニューを持つ場合、それを出力します。(*note
+     Menu::)
+
+`search PATTERN [OFFSET]'
+     検索を行ないます。第二引数は出力の開始位置。(*note Search::)
+
+`content ENTRY [OFFSET]'
+     エントリの内容を出力します。第二引数は出力の開始位置。(*note
+     Content::)
+
+`font [ID]'
+     外字データを xbm
+     形式で出力します。引数を省略した場合、全ての外字の情報を
+     出力します。外字の高さは変数 `font' により与えられます。
+
+`show [`-a'] [VARIABLE]'
+     変数の値を出力します。引数を省略した場合、すべての変数の一覧が出力されます。
+     `-a' を指定すると、通常表示されない内部変数も表示します。
+
+`set VARIABLE VALUE'
+     変数の値をセットします。
+
+`unset VARIALBE...'
+     変数をクリアします。
+
+`help'
+     コマンドの一覧を出力します。
+
+`quit'
+     eblook を終了します。
+
+
+File: eblook.info,  Node: Variables,  Next: Compile,  Prev: Commands,  Up: Top
+
+変数一覧
+********
+
+`search-method'
+     `search' コマンドの検索法。`exact', `word', `endword', `glob'
+     のいずれかが可能。デフォルトは `glob'。
+
+`max-hits'
+     `search' コマンドが出力する最大の項目数。0 のとき無制限。
+     デフォルトは 256。
+
+`max-text'
+     `content' コマンドが出力する表示バイト数(の目安)。0 のとき無制限。
+     デフォルトは 8192。
+
+`font'
+     外字データの高さ。デフォルトは 16。
+
+`kanji-code'
+     入出力の文字コード。設定出来る値は `jis', `sjis', `euc', `utf8',
+     `auto' など。(大文字、小文字の区別なし)。使用できるコードは OS
+     に依存します。
+
+`prompt'
+     プロンプト。デフォルトは "eblook> "。
+
+`version'
+     eblook のバージョン番号。
+
+`use-narrow-kana'
+     "true" を指定すると出力に半角カナ文字を含めます。デフォルトは
+     "off" で、 半角カナ文字は全角文字として出力されます。
+
+`stop-code'
+     [廃]テキスト出力の終了コード。"set stop-code 0x1f090000"
+     のように指定します。
+     辞書によっては、これを指定しないと出力が適切な個所で終了しません。
+     最近の eb library (Version 3.x)
+     との組み合わせでは機能しません。かわりに appendix file
+     を指定して下さい。(*note Appendix::)
+
+`pager'
+     [仮] "on" を設定すると検索結果表示時 (content コマンド)に 環境変数
+     PAGER で
+     指定したページャーが使用される。この機能を使用するためには、コンパイル時に
+     -with-pager オプションをつけて configure する必要がある。
+     (注)この変数は将来変更される可能性が高い
+
+`decorate-mode'
+     [仮] "on" を設定すると文字装飾のためのタグを出力します。
+     (注)この変数は将来変更される可能性が高い
+
+
+File: eblook.info,  Node: Compile,  Next: How To Get,  Prev: Variables,  Up: Top
+
+コンパイルとインストール
+************************
+
+   通常の UNIX 環境では、コンパイルはそれほど難しくありません。
+以下の手順でコンパイルを行なって下さい。
+  1. まず、eb library をインストールして下さい。 eb library は
+     <http://www.sra.co.jp/people/m-kasahr/eb/> より入手可能です。
+
+  2. `configure' スクリプトを実行します。 `./configure --prefix=/usr
+     --with-eb-conf=/etc/eb.conf '
+     などとします。指定できるオプションは以下の一覧を参照して下さい。
+
+  3. `make' を実行します。
+
+  4. `make install' を実行します。インストール先によっては root
+     権限が必要になります。
+
+   主要な設定オプション
+
+`--prefix'
+     インストール先を指定します。何も指定しないと、
+     `--prefix=/usr/local' を 指定した場合と同じです。
+
+`--with-eb-conf=FILE'
+     eb library の設定情報ファイルのありかを指定します。通常、自動的に
+     $(prefix)/etc/eb.conf ($(sysconfdir)/eb.conf)が仮定されるので、
+     それ以外の場所にインストールした場合には
+     `--with-eb-conf=/etc/eb.conf' あるいは `--sysconfdir=/etc'
+     などとして明示的に指定して下さい。
+
+`--with-readline'
+     GNU readline ライブラリを使用して行編集を行う場合に指定します。
+
+`--with-pager'
+     検索結果を外部 pager
+     を利用して表示します。実際の使用にあたっては、環境変数 `PAGER'
+     の指定 (`setenv PAGER less' 等) と eblook 変数の指定 `set pager
+     on'"が必要です。
+
+
+File: eblook.info,  Node: How To Get,  Prev: Compile,  Up: Top
+
+最新情報の入手
+**************
+
+   最新の eblook は，次のところから入手可能です。
+
+eblook
+     <http://openlab.ring.gr.jp/edict/eblook/>
+
+   eblook に関する情報交換は、edict や NDTPD
+のメーリングリストにて行われ ています。
+
+edict
+     <http://openlab.ring.gr.jp/edict/>
+
+NDTPD
+     <http://www.sra.co.jp/people/m-kasahr/ndtpd/>
+
+   eblook は edict 開発チーム (<edict@ring.gr.jp>) により管理さ
+れています。eblook に関する問い合わせはこちらまでお願いします。
+
+
+
+Tag Table:
+Node: Top1133
+Node: Introduction1864
+Node: Overview3079
+Node: Starting4814
+Node: Setting5862
+Node: Search7313
+Node: Word Search7847
+Node: Keyword Search9551
+Node: Multiple Search10181
+Node: Menu12259
+Node: Content12813
+Node: Appendix13557
+Node: Information15689
+Node: Commands16455
+Node: Variables17916
+Node: Compile19536
+Node: How To Get20949
+
+End Tag Table

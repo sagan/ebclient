@@ -1,0 +1,56 @@
+eblook は、EB ライブラリを用いた対話型の電子辞書検索コマンドです。簡単な
+設定とコマンドにより EPWING (互換) 書籍が利用出来ます。
+
+How To Install =========================================================
+
+eblook をコンパイルするには、あらかじめ笠原基之氏作の辞書検索ライブラリ
+EB をインストールしておく必要があります。EB ライブラリは次のところで手に
+入ります。バージョン 3.0.1 以降のものが必要です。
+
+  http://www.sra.co.jp/people/m-kasahr/eb/
+
+EB のインストールが完了したら、eblook 配布物に含まれる configure を実行
+して下さい。このときオプション --with-eb-conf により、それぞれ EB ライブ
+ラリの設定ファイルを指定出来ます。デフォルトでは次のようになっています。
+
+  % ./configure --with-eb-conf=/usr/local/etc/eb.conf
+
+eblook は Microsoft Windows 向けに、Cygwin 環境(B20.1 以降)でのコンパイ
+ルもサポートしています。この場合、以下の例に示すように、CC 環境変数で 
+Mingw32 環境用のコンパイラを明示的に指定して configure を実行して下さい。
+なお、Windows 上ではデフォルトの文字コードは SJIS になります。
+
+  % CC="gcc -mno-cygwin" ./configure
+
+最後に、次のように実行すれば eblook のインストールが完了します。
+
+  % make; make install
+
+詳しくは、附属のファイル INSTALL を参照して下さい。
+
+How To Use =============================================================
+
+eblook を利用するには、辞書のあるディレクトリを引数に eblook をシェルか
+ら起動して下さい。eblook が対話的に起動されます。
+
+  % eblook /cdrom
+  eblook> 
+
+`list' で辞書の一覧、`select' で辞書の選択、`search' で用語の検索、
+`content' で内容の表示、`help' でコマンドの一覧、`quit' で終了です。
+詳しくは、附属のドキュメントを参照して下さい。
+
+How To Get =============================================================
+
+eblook は Ring Server のオープンラボで開発されています。
+
+  http://openlab.ring.gr.jp/edict/eblook/
+
+eblook に関する情報交換は、edict や NDTPD のメーリングリストにて行われ
+ています。
+
+  edict ML: http://openlab.ring.gr.jp/edict/
+  NDTPD ML:  http://www.sra.co.jp/people/m-kasahr/ndtpd/ml-ja.html
+
+eblook は edict 開発チーム (edict@ring.gr.jp) により管理されています。
+eblook に関する問い合わせはこちらまでお願いします。

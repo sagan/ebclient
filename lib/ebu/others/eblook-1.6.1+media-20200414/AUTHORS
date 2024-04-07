@@ -1,0 +1,10 @@
+Keisuke Nishida <knishida@ring.gr.jp> wrote eblook.c and eblook.texi.
+
+Keisuke MORI <ksk@ntts.com> compiled eblook on the Cygwin environment.
+
+Satomi <satomi@ring.gr.jp> modified for EB-3.
+
+Kazuhiko <kazuhiko@ring.gr.jp> modified for EB-3.
+
+Takashi Nemoto <tnemoto@mvi.biglobe.ne.jp> wrote codeconv.c and
+codeconv.h.

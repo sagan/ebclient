@@ -1,0 +1,1050 @@
+2020-04-14  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	Update autotools.
+
+	* VERSION: Removed.  Version information is written into
+	configure.ac.
+
+	* Makefile.am (EXTRA_DIST): Remove VERSION.
+
+2020-04-14  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	Support color chart.  `color' command is available if linked with
+	EB Library with UTF-8 support 4.5 or later.
+
+	* eblook.c (command_color): New function.
+	(command_table, text_hooks, , hook_tags): Support color chart when
+	available.
+
+2015-07-24  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* eblook.c (search_pattern, insert_prev_next): Fix the bug that
+	very long heading's tail is not displayed.
+
+2015-03-01  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* eblook.c (main): Fix the case that HOME environment variable is
+	not defined on non-DOS system.  Fix buffer overrun with very long
+	HOME directory.
+	Cf. https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=715857
+
+2014-11-16  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* getopt.c: Include string.h.
+
+2014-11-16  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* configure.ac: Fix the case building out of source directory.
+
+2014-11-16  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* eblook.c (main): Remove unneeded check for history file name.
+
+2014-11-15  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* bmp_in.c (deflate_rgb24): Fix array length of buf variable.
+
+2014-11-15  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* eblook.c (search_wild_match_pattern): Renamed from
+	seach_wild_match_pattern.
+	(eblook_hit_list_wild): Adjusted.
+
+2014-11-15  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* eblook.c (main, fileman_completion): Remove old style readline
+	usage.
+	Cf. https://trac.macports.org/ticket/45690
+
+2013-09-19  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* eblook.c (command_book): Recognize ebnet URL when DOS_FILE_PATH
+	is defined.
+	Cf. https://github.com/lookup2/lookup2/issues/12#issuecomment-24679109
+
+2011-08-01  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	Support EB Library with UTF-8 support 20110801 and later.
+	* configure.ac: Use eb_LIB_EBU macro.
+
+	* bmp2ppm.c: Include libebu header when available.
+
+	* bmp_in.c: Likewise.
+
+	* eblook.c: Likewise.
+
+	* Makefile.am (SUBDIRS): Removed.
+
+	* m4/Makefile.am: Removed.
+
+	* m4/ebu.m4: New file.
+
+2010-10-27  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* eblook.c (command_content): Fix the case when eb_backward_text
+	or following eb_tell_text failed after loop.
+
+2010-08-18  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* eblook.c (process_child, show_candidate): Fix arguemnt type
+	mismatch in MULTI_DEBUG part.
+
+2010-08-16  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* codeconv.c (euc_to_current, current_to_euc): Refined.
+	Initialize conversion descriptor when error occured instead of
+	before using it.
+
+2010-08-14  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* eblook.c: Check if EB_HOOK_EBXAC_GAIJI is defined.
+
+2010-08-14  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* eblook.c (main): Do not check book's character code.
+
+2010-08-14  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* codeconv.c (current_to_euc, euc_to_current): Do not preserve
+	next data to write when buffer is overfilled.  Initialize
+	conversion descriptor before using it.
+
+2010-08-14  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* eblook.c (eblook_hit_list_wild, command_mpeg_path)
+	(eblook_search_wild): Add some casts.
+
+	* codeconv.h (xfgets): Change the type of second argument from int
+	to size_t
+
+	* codeconv.c (xfgets): Likewise.
+
+	* eblook.c (read_command): Likewise.
+
+2010-05-15  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* eblook.c (text_hooks, heading_hooks): Support EB_HOOK_GB2312,
+	EB_HOOK_EBXAC_GAIJI, EB_HOOK_BEGIN_UNICODE and EB_HOOK_END_UNICODE
+	if available.
+	(hook_gb2312, hook_ebxac_gaiji): New functions.
+	(hook_tags): Support EB_HOOK_BEGIN_UNICODE and EB_HOOK_END_UNICODE
+	if available.
+	(command_content): When entry begins with '-', display backward
+	content.
+
+2010-02-18  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* eblook.c (parse_command_line): Fix wrong use of strcpy().
+	Cf. http://d.hatena.ne.jp/toshiharu_z/20091114/1258209867
+
+2009-07-09  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* bmp_in.c (deflate_rgb24): Fix bug in decoder.
+
+2009-05-27  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* codeconv.c (xputs2): Do not call convert_nbsp.
+	(convert_nbsp): Removed.
+
+	* eblook.c (hook_iso8859_1): Convert NO-BREAK SPACE to SPACE.
+
+2009-04-11  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* eblook.c (command_info): Support JIS X 4081 UTF-8 extension.
+
+2009-02-25  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* eblook.c (hook_decoration): Support character modification
+	descriptors.
+	(text_hooks, heading_hooks): Add entries for
+	EB_HOOK_BEGIN_DECORATION and EB_HOOK_END_DECORATION.
+
+2009-02-19  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* eblook.c (hook_font, hook_decoration, hook_stopcode, hook_img)
+	(hook_tags): Return result of eb_write_text_string.
+
+2009-02-18  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* eblook.c (default_pager): Define only when pager feature is
+	enabled.
+	(default_escape_text): New constant.
+	(escape_text): New variable.
+	(main): Set internal variable "escape-text" in
+	initializing. Update escape_text according to the value of
+	"escape-text".
+	(hook_iso8859_1): New function.
+	(hook_euc_to_ascii): Escape text when needed.
+	(text_hooks, heading_hooks): Add entry for EB_HOOK_ISO8859_1.
+
+2009-02-13  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* Makefile.am (EXTRA_DIST): Add README.org
+
+	* README.org: Renamed from README.
+	* README: New file.
+
+2009-02-07  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* eblook.c (command_bmp, command_jpeg, command_wav)
+	(command_mpeg): Call fopen with mode "wb". Do not call setmode.
+
+	* bmp2ppm.c (command_bmp2ppm, command_bmp2tiff): Ditto.
+
+2009-02-06  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* configure.ac (AC_PREREQ, eb_SYS_LARGEFILE): Added.
+	(AC_PROG_MAKE_SET, AC_HEADER_STDC, AC_HEADER_STAT, AC_C_CONST)
+	(AC_TYPE_OFF_T, AC_FUNC_MEMCMP, AC_REPLACE_FUNCS)
+	(AC_HEADER_TIME): Removed.
+	(AM_INIT_AUTOMAKE): Remove arguments.
+	(AC_CHECK_HEADERS): Remove checks for stdlib.h, string.h, unistd.h
+	and ctype.h.
+	(AC_CHECK_FUNCS): Remove checks for memcpy, strchr, strerror and
+	strtol.
+	(AC_FUNC_ALLOCA): Added.
+	(AC_CONFIG_FILES): Remove rules for dos/Makefile and dos/config.h,
+	and Add rule for m4/Makefile.
+
+	* bmp2ppm.c, bmp_in.c, codeconv.c, codeconv.h, eblook.c, getopt.c:
+	* getopt.h, getopt1.c, strcasecmp.c: Assume
+	POSIX.1-1990 systems and requires ANSI C89 compiler.
+
+	* memcmp.c, memset.c, strdup.c, dos/*: Removed.
+
+	* win32.c: 
+
+	* Makefile.am (eblook_SOURCES): Add win32.c.
+	(EXTRA_DIST): Remove memset.c and win32.c.
+	(SUBDIRS): Remove dos and add m4.
+
+	* m4/Makefile.am, m4/Makeifle.in: New files.
+
+	* m4/largefile.m4, m4/eb4.m4: Import from EB Library 4.4.
+
+	* m4/libtool.m4, m4/m4/ltdl.m4, m4/ltoptions.m4, m4/ltsugar.m4:
+	* m4/ltversion.m4, m4/lt~obsolete.m4, ltmain.sh, config.guess:
+	* config.sub: Import from libtool-2.2.6.
+
+2009-02-03  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* configure.ac: Change default encoding to SHIFT-JIS on MinGW.
+
+2008-01-16  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* eblook.c (command_mpeg_path): New function.
+	(command_table): Add entry for it.
+
+2007-08-06  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* eblook.c (text_hooks): Add entry for EB_HOOK_SET_INDENT.
+	(hook_decoration): Support hook code of EB_HOOK_SET_INDENT.
+
+2007-06-01  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* eblook.c (main): New option --non-interactive (-i).
+	(short_options, long_options, show_help): Ditto.
+	(interactive_mode): Change initial value.
+	(show_version): Update copyright notice.
+
+2007-03-04  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* eblook.c (EB_INDEX_STYLE_CONVERT): New constant. Originally
+	defined in EB Library.
+	(search_wild_convert_pattern): Remove spaces in pattern. Convert
+	lower cases to upper as required.
+
+2007-02-03  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* eblook.c (uint1, uint2, uint 4): New macros.
+	(eblook_wild_pattern, eblook_wild_page, eblook_wild_count): New
+	variables.
+	(eblook_search_wild, eblook_hit_list_wild, eblook_have_wild_search)
+	(search_wild_insert_euc_char, search_wild_convert_pattern)
+	(seach_wild_match_pattern): New functions.
+	(command_subinfo, parse_entry_id, search_pattern): Support
+	searching with wild card.
+
+2007-02-03  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* eblook.c (command_pbm, command_xbm, process_child)
+	(show_candidate): Fix argument type mismatch.
+
+2007-01-28  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* eblook.c (command_book): Finalize appendix when appendix is not
+	specified.
+
+2007-01-20  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* eblook.c (search_pattern): In deciding method, search-method is
+	checked prior to auto judgment. Support cross search.
+	(eblook_search_cross): New function.
+
+2006-12-12  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* eblook.c (show_prev_next_flag): New variable.
+	(insert_content): Don't show references to previous and next
+	articles when show_prev_next_flag is equal to 0.
+	(hook_img): Set show_prev_next_flag to 0 when called with
+	EB_HOOK_END_IMAGE_PAGE hook.
+	(hook_tags): Ditto when called with EB_HOOK_GRAPHIC_REFERENCE hook.
+
+2006-12-07  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* bmp_in.c (LoadBMP): (Almost) rewritten. Support 4bit RLE
+	compression and do not refer header information for a file size.
+	(deflate_rle4, deflate_rle8, deflate_rgb1, deflate_rgb4)
+	(deflate_rgb8, deflate_rgb24, init_bmp_buf)
+	(read_bytes_from_bmp_buf, seek_bytes_bmp_buf): New functions.
+	These are called from LoadBMP function.
+	(read_data_from_eb): Return byte count when function read data
+	partially.
+	(get_word, read_dword_from_eb): Removed.
+
+2006-12-04  Kazuhiro Ito <kzhr@d1.dion.ne.jp>
+
+	* eblook.c (command_table[]): Add commands for graphic menu.
+	(text_hooks[]): Add hooks for image map and clickable area.
+	(command_image_menu): New function.
+	(hook_tags): Handle image map and clickable area.
+
+2006-07-25  Kazuhiro Ito  <kzhr@d1.dion.ne.jp>
+
+	* eblook.c (hook_img): Set inline tag for inline images.
+
+2006-07-12  Kazuhiro Ito <kzhr@d1.dion.ne.jp>
+
+	* VERSION: Change to 1.6.1+media-yyyymmdd.
+	* eblook.c (excute_command): Fix typo in error string.
+
+2006-06-27  Hideyuki SHIRAI  <shirai@meadowy.org>
+
+	* eblook.c (command_table[]): Add commands for movie.
+	(text_hooks[]): Add hooks for movie.
+	(command_mpeg): New function.
+	(hook_img): Handle movie hooks.
+
+2006-04-12  Kazuhiro Ito <kzhr@d1.dion.ne.jp>
+
+	* eblook.c (main): Recognize ebnet URL when DOS_FILE_PATH is defined.
+
+2005-11-19  Kazuhiro Ito <kzhr@d1.dion.ne.jp>
+
+	* eblook.c: Add WAVE sound support.
+
+2004-06-18  Kazuhiko  <kazuhiko@fdiary.net>
+
+	* bmp2ppm.c, eblook.c : no longer use EB_P()
+
+2004-02-13  Kazuhiko  <kazuhiko@fdiary.net>
+
+	* Version 1.6 released.
+
+2003-06-30  Takashi NEMOTO  <tnemoto@mvi.biglobe.ne.jp>
+
+	* eblook.c (insert_dump): initialize outFP by default value
+
+2002-12-08  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+
+	* codeconv.c: convert from ISO8859-1 NBSP(0xa0) to SPACE(0x20)
+
+2002-11-19  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+	
+        * eblook.c : use $HOME/eblookrc instead of $HOME/.eblookrc in DOS mode
+	  	     change variable "pager" default to "off"
+		     don't decorate search result
+		     add '-a' option to "show" command (display internal val.)
+		     bugfix : search history and <more=xx> 
+		     revise pager support
+	
+2002-11-18  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+	* configure.ac : Search eb.conf at additional path "/etc"
+			Check readline library when --with-readline is used
+	
+	
+	Merge from eblook-1_6devel-branch
+------------------------------------------
+2002-11-17  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+
+	* eblook.c (search pattern): bugfix:search without argument(<more...>)
+	* eblook.c (parse_entry_id): remove duplicate entry in parse_entry_id
+	* eblook.c (insert_dump): add pager support
+
+2002-11-16  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+
+	* eblook.c (hook_img): Check definition of EB_HOOK_ inline image
+
+2002-11-15  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+
+	* configure.ac: revise libreadline detection
+	* eblook.c (search_pattern): bug fix (search command)
+	   ===== TODO: bugfix - search without argument (<more...>) ====
+	   ===== TODO: bugfix - remove duplicate entry in parse_entry_id ====
+
+2002-11-02  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+
+	* eblook.texi : Add documents (Compile, Install)
+	* eblook.c : support eb_forward/backward_text
+
+---------------------------------------------
+
+2002-11-16  Satomi  <satomi@ring.gr.jp>
+
+	* eblook.c: Fix #ifdef condition for HAVE_SET_MODE.
+	* bmp2ppm.c: Ditto.
+
+2002-11-15  Satomi  <satomi@ring.gr.jp>
+
+	* eblook.c (command_bmp): Encode filename in SJIS if
+	DOS_FILE_PATH is defined.
+
+	* eblook.c (command_jpeg): Encode filename in SJIS if
+	DOS_FILE_PATH is defined. Do not close the file handle
+	if not opened yet, to avoid fatal error on VC++ debug build.
+
+2002-11-15  Satomi  <satomi@ring.gr.jp>
+
+	* eblook.c (hook_img): Use EB_HOOK_BEGIN_IN_COLOR_xxx only if
+	defined.
+
+2002-11-09  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+
+	* eblook.c (hook_img): add inline image support
+
+2002-11-04  Satomi  <satomi@ring.gr.jp>
+
+	* eblook.c (show-version): Modify copyright year.
+	* bmp2ppm.c: Include <io.h> and <fcntl.h> if WIN32 or
+	HAVE_SETMODE is defined.
+
+2002-10-26  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+
+	* eblook.c (main): cleanup configure.ac
+
+2002-10-25  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+
+	* eblook.c (insert_content): Disable pager when called from lookup
+
+2002-10-23  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+
+	* eblook.c (read_command): treat last line of .eblookrc
+
+2002-10-22  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+
+	* eblook.c : disable readline library when invoked from lookup
+	* eblook.c : allow comment in .eblookrc 
+	                        ('#' or ';' at the begining of line)
+
+2002-10-20  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+
+	* configure.ac: remove AC_CYGWIN, AC_MINGW32
+	
+----
+Merging eblook-interactive-branch to head:
+  
+  Tag "HEAD"
+
+  2002-10-26  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+	* dos/*, eblook.c : merge support for dos, os/2 (watcom C) 
+	
+  Tag "eblook-1_6devel-merge2"
+  2002-10-21  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+
+	* eblook.c : 
+	        remove redundant entries from hit list
+		replace part of "WIN32" with "DOS_FILE_PATH"
+		support inline image
+		support multiple subbook in same directory
+
+  Tag "eblook-1_6devel-merge1"
+
+  2002-10-20  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+	* bmp2ppm.c, bmp_in.c : fix type conversion
+	* bmp2ppm.c : bugfix (.ppm write error)
+
+  Tag "eblook-1_6devel-merge0"
+----
+2002-10-08  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+
+	* eblook.c (main): bugfix (win32 : bind appendix file)
+
+2002-09-21  Satomi  <satomi@ring.gr.jp>
+
+	* eblook.c, bmp2ppm.c: use setmode() to disable newline coversion
+		when saving a binary file on Win32. set HAVE_SETMODE to 1 to
+		enable this routine on other platforms than Win32.
+
+2002-05-23  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+
+	* Makefile.am (EXTRA_DIST): Add win32.c
+
+2002-04-25  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+
+	* eblook.c: Merge readline, pager related codes written by jsawa
+		new variable "pager"
+	* configure.ac : new option "--with-pager", "--with-readline"
+	* codeconv.[ch] (current_to_euc) : remove static 
+
+2002-03-26  Kazuhiko  <kazuhiko@fdiary.net>
+
+	* configure.ac: Renamed from configure.in. Merge acconfig.h.
+	* acconfig.h: Removed.
+
+2002-03-17  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+
+	* eblook.c : new variable "decorate-mode" ("on" or "true", default:off)
+
+2002-03-13  Satomi  <satomi@ring.gr.jp>
+
+	* bmp_in.c: avoid definition conflict with <wingdi.h> on Win32.
+
+2002-01-08  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+
+	* eblook.c : change EB_HOOK_ macro names (as those of eb-3.2beta1)
+
+2002-01-06  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+
+	* eblook.c : support narrow kana.
+		     new variable "use-narrow-kana" ("true" or others)
+
+2001-12-28  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+
+	* eblook.c : add decoration (emphasis, bold, etc.) code
+
+2001-12-09  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+
+	* bmp_in.c: bugfix (24bit bmp)
+	* eblook.c: remove debug message
+
+2001-12-08  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+
+	* bmp2ppm.c, bmp_in.c, eblook.c:  Revise error check
+
+2001-12-07  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+
+	* bmp2ppm.c, bmp_in.c, eblook.c:  Add error check (graphics decode)
+
+2001-11-30  Kazuhiko  <kazuhiko@ring.gr.jp>
+
+	* eblook.c (hook_img): Remove '\n' from '</img>' tag.
+
+2001-11-29  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+
+	* bmp_in.c: Add new file. BMP file decoder.
+	* bmp2ppm.c: Remove bmp decoder
+
+2001-11-28  Kazuhiko  <kazuhiko@ring.gr.jp>
+
+	* eblook.c (hook_img): Revise output tag.
+
+2001-11-28  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+
+	* bmp2ppm.c (command_bmp2tiff): Add new functions for TIFF
+
+2001-11-27  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+
+	* eblook.c (insert_dump): Fix 1 byte lacking problem.
+	(main): Remove locale_init("SJIS") under _WIN32 condition
+
+2001-11-23  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+
+	* eblook.c (text_hooks[]): Add EB_HOOK_STOP_CODE for eb-3.2.
+	* codeconv.h, codeconv.c: Fix variable argument functions
+	* codeconv.c: Add Watcom C compiler specific code
+	* codeconv.c, codeconv.h: Bug fix (without iconv case)
+		   Bug fix (size_t)-1 > 0 when iconv returns error
+	* codeconv.h, codeconv.c, configure.in:
+		Check existence of sys/types.h, isatty, and so on.
+	* configure.in: bug-fix: FALLBACK_ENCODING on HP-UX
+	* configure.in: Change default FALLBACK_ENCODING on CYGWIN
+
+2001-11-18  YAMAGATA  <yamagata@nwgpc.kek.jp>
+
+	* eblook.c (command_xbm, command_pbm): New commands to extract
+	monochrome image in text format.  Type "xbm page:offset width
+	height" or "pbm page:offset width height".  pbm is almost for the
+	debugging purpose.
+	(hook_img): New EB hook function to handle image tag, Currently
+	supports only 0x1f44/0x1f64 pair.
+
+2001-09-04  Satomi  <satomi@ring.gr.jp>
+
+	* eblook.c (main, command_book): Fix Win32 path manipulation.
+	(main): Set default locale to SJIS on Win32 when kanji-code is set
+	to AUTO.
+
+	* win32.c: Remove extra 0x0D codes (sorry for large diff).
+
+2001-08-31  Kazuhiko  <kazuhiko@ring.gr.jp>
+
+	* Version 1.5 released.
+
+2001-07-31  Kazuhiko  <kazuhiko@ring.gr.jp>
+
+	* eblook.c (hook_stopcode): Use EB_SUCCESS and EB_ERR_STOP_CODE
+	for a return value (contributed by yamagata@nwgpc.kek.jp).
+
+2001-07-12  Kazuhiko  <kazuhiko@ring.gr.jp>
+
+	* Version 1.5pre2 released.
+
+2001-07-11  Kazuhiko  <kazuhiko@ring.gr.jp>
+
+	* eblook.c (show_version): Revise copyright notice.
+
+	* eblook.texi: Revise document.
+
+2001-07-09  Kazuhiko  <kazuhiko@ring.gr.jp>
+
+	* eblook.texi (How To Get): Revise information.
+
+2001-07-08  Kazuhiko  <kazuhiko@ring.gr.jp>
+
+	* Version 1.5pre1 released.
+
+	* eblook.texi: Add description about keyword search and multiple
+	search.
+
+	* eblook.c: Fix typo in command_table[].
+
+2001-07-04  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+
+	* eblook.c: Define ENABLE_PTHREAD when EBCONF_ENABLE_PTHREAD is
+	defined.
+
+2001-06-29  Kazuhiko  <kazuhiko@ring.gr.jp>
+
+	* eblook.c (can_menu_narrow_char): Revise for eb-3.0 (contributed
+	by yamagata@nwgpc.kek.jp).
+	(can_menu_wide_char): Ditto.
+	
+2001-06-20  Satomi  <satomi@ring.gr.jp>
+
+	* win32.c: include "config.h" when HAVE_CONFIG_H is defined.
+	(dos_fix_path): assume characters as unsigend.
+
+2001-06-20  Satomi  <satomi@ring.gr.jp>
+
+	* eblook.c: (main, command_book): convert SJIS path to EUC
+	before printing (on Win32).
+	(command_book): do not report appendix when not bound.
+	convert '/'s in a path to '\\'s before passing to eb library
+	(on Win32).
+	(show_candidate_level): declare as void to avoid a compiler
+	warning.
+
+	* codeconv.c: (locale_init): do not refer to cur_to_euc and
+	euc_to_cur when HAVE_ICONV is not defined.
+	(current_to_euc, euc_to_current): bug fix when reading the
+	input string. Support single-byte kana in SJIS conversion.
+
+	* win32.c: new file for Win32.
+
+2001-06-17  Kazuhiko  <kazuhiko@ring.gr.jp>
+
+	* eblook.texi (Overview): Add description about keyword search.
+
+2001-04-09  Kazuhiko  <kazuhiko@ring.gr.jp>
+
+	* eblook.c: Implement 'label' command (contributed by
+	yamagata@nwgpc.kek.jp).
+	(command_label): New function.
+	(show_entry_candidate): New function.
+	(show_label): New function.
+
+2001-04-09  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+
+	* codeconv.c : Add ISO-2022-JP Alias support (JIS, ...)
+
+2001-04-08  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+
+	* codeconv.c : reset iconv conversion state after code conversion
+        * Fix incorrect ChangeLog
+
+2001-04-08  Kazuhiko  <kazuhiko@ring.gr.jp>
+
+	* eblook.texi: Change contact information etc.
+
+	* eblook.c (main): New option --encoding (-e). Ignore case in
+	matching kanji-code option name.
+
+	* README: Modify required version of eb library.
+
+	* configure.in: Modified for merged codeconv.c.
+
+	* memcmp.c: New file.
+	* strcasecmp.c: New file.	
+	* strdup.c: New file.
+
+	* eblook.c (eblook_read): Remove.
+	(eblook_write): Remove.
+	(jis2euc): Remove.
+	(sjis2euc): Remove.
+	(write_euc2jis): Remove.
+	(write_euc2sjis): Remove.
+
+2001-04-04  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+
+	* configure.in : HP-UX treatment (default=Shift-JIS)
+	* codeconv.c : update comments, 
+		remove FALLBACK_ENCODING definition 
+
+2001-04-02  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+
+	* codeconv.c: fix locale treatment (in the case 
+		that locale is not japanese, such as C, en_US and so on..).
+		simplify initialize routine
+
+2001-02-28  Takashi NEMOTO  <tnemoto@mvi.biglobe.ne.jp>
+
+	* codeconv.c: fix typos, remove temporary comments
+
+2001-02-25  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+
+	* codeconv.c : fix initialization sequence
+	
+2001-02-23  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+
+	* codeconv.c : remove outjstr, getjstr functions
+		rewrite initialize function (locale_init)
+		new current_to_euc, euc_to_current functions
+		rewrite xputs2 using euc_to_current function
+		new xfgets function using current_to_euc
+
+2001-02-13  Kazuhiko  <kazuhiko@ring.gr.jp>
+
+	* eblook.c (command_subinfo): Disable 'graphic' search that is
+	removed in eb-3.0alpha4.
+
+2001-02-12  Satomi  <satomi@ring.gr.jp>
+
+	* eblook.c: Use KANJICODE enum type, declared in codeconv.h.
+	* eblook.c: Avoid compiler warnings.
+
+2001-02-12  Satomi  <satomi@ring.gr.jp>
+
+	* codeconv.h: Add KANJICODE enum type.
+	* codeconv.c (xputs2): Refer to kanji_code external variable when
+		HAVE_ICONV is not defined.
+
+2001-01-26  Kazuhiko  <kazuhiko@ring.gr.jp>
+
+	* codeconv.h: Never define pseudo function as real function.
+
+2001-01-24  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+
+	* configure.in : fallback-charset => fallback-encoding
+	* codeconv.c : FALLBACK_CODESET => FALLBACK_ENCODING
+	* acconfig.h : FALLBACK_CHARSET => FALLBACK_ENCODING,
+		add #undef SMALL_STACK
+
+2001-01-23  Takashi NEMOTO  <tnemoto@mvi.biglobe.ne.jp>
+
+	* codeconv.c (locale_init) : Revert FALLBACK_CHARSET code
+
+2001-01-23  Takashi NEMOTO  <tnemoto@mvi.biglobe.ne.jp>
+
+	* configure.in, acconfig.h, codeconv.c:
+			rename from DEFAULT_CHARSET to FALLBACK_CHARSET
+	* codeconv.c (locale_init, xputs2, getjstr): Add error check code.
+		     (xputs2): 	fix memory leak
+
+2001-01-21  Kazuhiko  <kazuhiko@ring.gr.jp>
+
+	* codeconv.h: Never define pseudo function as real function.
+
+	* eblook.c: New Macro MAX_DUMP_SIZE .
+	(main): New variable max-dump.
+	(command_dump): New function.
+	(insert_dump): New function.
+
+2001-01-10  NEMOTO Takashi  <tnemoto@mvi.biglobe.ne.jp>
+
+	* codeconv.c (xputs): Put newline after string.
+
+2001-01-08  Kazuhiko  <kazuhiko@ring.gr.jp>
+
+	* codeconv.c (xputs2): Allocate memory for output buffer
+	dynamically. Return not 0 but EOF on error.
+	(xfgets): Allocate memory for temporary buffer same as 2nd
+	argument.
+
+2001-01-06  Kazuhiko  <kazuhiko@ring.gr.jp>
+
+	* configure.in: Support iconv.
+
+	* eblook.c (read_command): Use xfgets instead of fgets.
+
+	* codeconv.h: New file.
+	* codeconv.c: New file.
+
+2001-01-03  Kazuhiko  <kazuhiko@ring.gr.jp>
+
+	* eblook.c (text_hooks[]) Add EB_HOOK_BEGIN_CANDIDATE and
+	EB_HOOK_END_CANDIDATE_GROUP'.
+	(hook_tags): Add cases of EB_HOOK_BEGIN_CANDIDATE and
+	EB_HOOK_END_CANDIDATE_GROUP'.
+
+2000-12-20  Kazuhiko  <kazuhiko@ring.gr.jp>
+
+	* eblook.c (search_pattern): Check return value of eb_seek_text,
+	eb_read_heading and eb_read_text. Terminate result of
+	eb_read_heading and eb_read_text.
+	(show_candidate): Change function type from void to int.
+
+2000-12-19  Kazuhiko  <kazuhiko@ring.gr.jp>
+
+	* eblook.c (text_hooks[]): Remove EB_HOOK_{BEGIN,END}_MENU.
+	Temporary remove EB_HOOK_{BEGIN,END}_{PICTURE,SOUND}.
+	(multi_candidate_hooks[]): Ditto.
+	(hook_newline): Remove. Use eb_hook_newline instead of it.
+	(hook_font): Revise for eb-3.0alpha3.
+
+2000-12-12  Kazuhiko  <kazuhiko@ring.gr.jp>
+
+	* Makefile.am (eblook_LDADD): Add @LIBOBJS@.
+
+2000-10-25  Motoyuki Kasahara  <m-kasahr@sra.co.jp>
+
+	* eblook.c: Beaufify code.
+
+2000-10-20  Kazuhiko  <kazuhiko@ring.gr.jp>
+
+	* memset.c: New file.
+
+	* configure.in: Add 'AC_REPLACE_FUNCS(memset)'.
+
+	* Makefile.am (EXTRA_DIST): Add 'memset.c'.
+
+2000-10-20  Rei  <rei@wdic.org>
+
+	* eblook.c (eblook_search_keyword): Regress to rev.1.17 (sorry).
+
+2000-10-19  Rei  <rei@wdic.org>
+
+	* eblook.c (command_info, parse_dict_id): Minor change for better
+	error handling.
+	(search_pattern): Restore the 2nd argument of eb_seek_text() call,
+	which had been accidentally changed.
+	(process_child): Add return value (0) to avoid compiler warning.
+	(show_candidates_level): Declare as void function to avoid compiler
+	warning.
+	(can_menu_begin, can_menu_end, show_candidates_level): Use memset()
+	instead of bzero().
+
+2000-10-18  Kazuhiko  <kazuhiko@ring.gr.jp>
+
+	* eblook.c (search_pattern): Support keyword search (by
+	yamagata@nwgpc.kek.jp).
+	(eblook_search_keyword): New function.
+	(command_info): Fix a bug (thanks to yamagata@nwgpc.kek.jp and
+	Motoyuki Kasahara).
+	(search_pattern): Support multiple search (by yamagata@nwgpc.kek.jp)
+	(eblook_search_multi): New function.
+
+2000-10-11  Kazuhiko  <kazuhiko@ring.gr.jp>
+
+	* README: Revise for EB-3.
+
+	* configure.in: Revise for EB-3 (thanks to Motoyuki Kasahara).
+
+	* acinclude.m4: Remove file.
+
+	* eblook.texi: Change character code from JIS to EUC.
+
+2000-10-10  Kazuhiko  <kazuhiko@ring.gr.jp>
+
+	* eblook.c: More revise for EB-3.
+
+	* Makefile.am (MAINTAINERCLEANFILES): Remove config.h.in.
+
+2000-08-18  Rei  <rei@wdic.org>
+
+	* eblook.c: Modify for eb-3.0alpha1.
+
+2000-02-25  Keisuke Nishida  <kxn30@po.cwru.edu>
+
+	* eblook.c (main): Set kanji-code only when the book is written
+	in Japanese.
+
+1999-12-14  Keisuke Nishida  <kxn30@po.cwru.edu>
+
+	* Makefile.am (MAINTAINERCLEANFILES): Remove generated files.
+
+1999-12-08  Keisuke Nishida  <kxn30@po.cwru.edu>
+
+	* Version 1.3 released.
+
+1999-11-16  Eiji-usagi-MATSUmoto  <usagi@clave.gr.jp>
+
+	* eblook.c: suppress duplicated hit contents.
+	(imported from ndtpd by Motoyuki Kasahara <m-kasahr@sra.co.jp>)
+
+1999-07-31 Kazuhiro Ito <m1877334@msic.med.osaka-cu.ac.jp>
+
+	* eblook.c (insert_content): insert a newline securely.
+	(created by Keisuke Nishida <kei@psn.net>)
+
+1999-04-27  Keisuke Mori  <ksk@ntts.com>
+
+	* VERSION: New file.
+
+	* configure.in: Get the version number from VERSION file.
+	--with-ming32 option has been eliminated since it's too much
+	system dependent on Cygwin.
+
+	* eblook.c (sjis2euc): a bug fixed in handling 0x9f as the second
+	byte of SJIS. Error checking for an input string has been
+	improved.
+
+1999-04-27  Motoyuki Kasahara <m-kasahr@sra.co.jp>
+
+	* eblook.c (main): Add a feature to use GNU getopt_long.
+	getopt.h, getopt.c and getopt1.c have been added for this.
+
+1999-02-10  NISHIDA Keisuke  <knishida@nn.iij4u.or.jp>
+
+	* Version 1.2 released.
+
+	* eblook.c (show_version): Refer the variable `version'.
+	(main): Set the variable `version' with the version of EB library.
+
+1999-02-06  NISHIDA Keisuke  <knishida@nn.iij4u.or.jp>
+
+	* Use autoconf-2.13 and automake-1.4.
+	* configure.in: Define the macros for the win32 emvironments.
+	(Thanks to Keisuke Mori!)
+
+	* acinclude.m4: New file with macro `EB_CONFIG'.
+	* configure.in: Use `EB_CONFIG'.
+	* Makefile.am: Updated.
+
+	* INSTALL: Japanized.
+
+	* eblook.c (main): Set book and appendix after loading init file.
+	(kanji_code, default_code): New variables.
+	(eblook_read, eblook_write, jis2euc, sjis2euc,
+	write_euc2jis, write_euc2sjis): New functions.
+	(main): Set kanji code.
+	(read_command): Use `eblook_read'.
+	(command_list, command_subinfo, search_pattern, insert_content):
+	Use `eblook_write'.
+
+1998-12-22  NISHIDA Keisuke  <knishida@nn.iij4u.or.jp>
+
+	* eblook.c: Include <errno.h> instead of <sys/errno.h>.
+
+1998-12-07  NISHIDA Keisuke  <knishida@nn.iij4u.or.jp>
+
+	* Version 1.1 released.
+
+	* eb: Excluded.
+	* eblook.c: Rewriten.
+	* configure.in, Makefile.am: Rewriten.
+	* README: Updated.
+
+1998-10-17  NISHIDA Keisuke  <knishida@nn.iij4u.or.jp>
+
+	* Version 1.0 released.
+
+	* eblook.texi: Updated for eblook 1.0.
+
+	* eblook.c (command_copyright): New command.
+
+1998-09-03  NISHIDA Keisuke  <knishida@nn.iij4u.or.jp>
+
+	* eblook.c (main): Initialize hookset first.
+
+1998-08-01  NISHIDA Keisuke  <knishida@nn.iij4u.or.jp>
+
+	* Version 1.0b0 released.
+
+	* configure.in: Fixed some probrems.
+	* configure.in, Makefile.am: Check and use zlib if it already exists.
+	(Thanks to Motoyuki Kasahara!)
+
+	* eb: Updated to eb-2.1beta1.
+
+1998-06-12  NISHIDA Keisuke  <knishida@nn.iij4u.or.jp>
+
+	* Version 0.9.1 released.
+
+	* README: Updated for eblook 0.9.
+
+	* eb: Updated to eb-2.0.1.
+
+	* eblook.c (hook_stopcode): New function.
+
+1998-06-10  NISHIDA Keisuke  <knishida@nn.iij4u.or.jp>
+
+	* Version 0.9 released.
+
+	* eb: Updated to eb-2.0.
+
+1998-05-17  NISHIDA Keisuke  <knishida@nn.iij4u.or.jp>
+
+	* eblook.c: Now we load an init file "~/.eblookrc" before all.
+
+1998-05-16  NISHIDA Keisuke  <knishida@nn.iij4u.or.jp>
+
+	* eblook.c (hook_narrow_font, hook_wide_font): Modify the format
+	of gaiji tags again.  Now we use same tags with NDTPD 2.x.
+	(text_hooks): Fixed hook name for narrow charactors.
+
+1998-05-10  NISHIDA Keisuke  <knishida@nn.iij4u.or.jp>
+
+	* configure.in: Modified to use libtool.
+	* eb: Updated to eb-2.0beta1.
+
+1998-05-01  NISHIDA Keisuke  <knishida@osk.3web.ne.jp>
+
+	* eblook.c: Fixed incorrect uses of `EB_P' macro.
+	(main, internal_set_appendix): Fixed to initialize appendix before
+	bindings.
+
+1998-03-29  NISHIDA Keisuke  <knishida@osk.3web.ne.jp>
+
+	* eblook.c: Rename variable `last_search_method' to
+	`last_search_function'.
+	(eblook_search_string): Deleted.
+	(search_pattern, parse_entry_id): Updated.
+	(command_search): Fixed.
+
+	* eblook.c (hook_narrow_font, hook_wide_font): Modify the format
+	of gaiji tags.
+
+	* eblook.c: Updated for eb-2.x.
+	* eb: Updated to eb-2.0beta0.
+
+1998-03-27  NISHIDA Keisuke  <knishida@osk.3web.ne.jp>
+
+	* eblook.c (insert_font_list): New function.
+	(command_font): Updated.
+	(insert_dicinfo): Modified not to display the font ranges.
+
+1998-03/26  NISHIDA Keisuke  <knishida@osk.3web.ne.jp>
+
+	* eblook.c (hook_begin_reference, hook_end_reference): New hooks
+	to insert references.
+
+1998-03-20  NISHIDA Keisuke  <knishida@osk.3web.ne.jp>
+
+	* Version 0.8.2 released.
+
+	* eb: Updated to eb-1.0.6.
+
+1998-03-09  NISHIDA Keisuke  <knishida@osk.3web.ne.jp>
+
+	* Version 0.8.1 released.
+
+1998-03-08  NISHIDA Keisuke  <knishida@osk.3web.ne.jp>
+
+	* eblook.texi: Now we don't use version.texi.
+
+	* eblook.c (salist_set): Fixed a missing loop break.
+
+1998-02-22  NISHIDA Keisuke  <knishida@osk.3web.ne.jp>
+
+	* Version 0.8 released.
+
